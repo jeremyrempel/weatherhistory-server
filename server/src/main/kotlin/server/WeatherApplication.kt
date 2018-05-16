@@ -1,11 +1,11 @@
-package com.example.demo
+package server
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DemoApplication
+class WeatherApplication
 
 fun main(args: Array<String>) {
-    runApplication<DemoApplication>(*args)
+    runApplication<WeatherApplication>(*args)
 }
