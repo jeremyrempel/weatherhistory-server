@@ -36,4 +36,14 @@ CREATE TABLE monthlyavg (
   precip DECIMAL NOT NULL
 );
 
+CREATE OR REPLACE VIEW locations AS
+SELECT
+ c.name,
+ c.station_code,
+ c.country_code,
+ s.state,
+ c.location
+FROM cities c
+JOIN stations s ON c.station_code = s.station_code;
+
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO weather;
