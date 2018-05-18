@@ -46,7 +46,7 @@ fun getStations(): List<String> {
     val blah = mutableListOf<String>()
     getConnection().use { conn ->
         val st = conn.createStatement()
-        st.executeQuery("select station_code from cities").use { rs ->
+        st.executeQuery("select distinct station_code from cities").use { rs ->
             while (rs.next()) {
                 blah.add(rs.getString(1))
             }

@@ -29,12 +29,16 @@ CREATE TABLE cities (
 DROP TABLE IF EXISTS monthlyavg;
 
 CREATE TABLE monthlyavg (
+  id SERIAL PRIMARY KEY,
   station_code CHAR(11) REFERENCES stations (station_code) NOT NULL,
   month INT NOT NULL,
   maxtemp DECIMAL NOT NULL,
   mintemp DECIMAL NOT NULL,
   precip DECIMAL NOT NULL
 );
+
+CREATE UNIQUE INDEX monthlyavg_idx1 ON monthlyavg (station_code, month);
+
 
 CREATE OR REPLACE VIEW locations AS
 SELECT
@@ -47,3 +51,4 @@ FROM cities c
 JOIN stations s ON c.station_code = s.station_code;
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO weather;
+GRANT ALL ON monthlyavg_id_seq TO weather;

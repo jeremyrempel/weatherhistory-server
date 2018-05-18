@@ -1,4 +1,3 @@
 rootProject.name = 'tripplanner'
 include 'dataload'
 include 'server'
-
