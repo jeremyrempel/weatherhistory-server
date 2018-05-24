@@ -1,3 +1,6 @@
+# install postgis
+CREATE EXTENSION postgis;
+
 DROP TABLE IF EXISTS countries;
 
 CREATE TABLE countries (
