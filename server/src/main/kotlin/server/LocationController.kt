@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class LocationController(val locationRepository: LocationRepository) {
 
-    @RequestMapping("/location")
-    fun query(@RequestParam(value = "q", defaultValue = "") query: String) = locationRepository.findByNameIgnoreCaseContaining(query)
+    @RequestMapping("/locations")
+    fun findAll() = locationRepository.findAll()
 }

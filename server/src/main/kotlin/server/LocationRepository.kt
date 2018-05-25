@@ -1,7 +1,7 @@
 package server
 
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.Repository
 
-interface LocationRepository : CrudRepository<Location, Long> {
-    fun findByNameIgnoreCaseContaining(query: String): List<Location>
+interface LocationRepository : Repository<Location, Long> {
+    fun findAll(): Iterable<Location>
 }
