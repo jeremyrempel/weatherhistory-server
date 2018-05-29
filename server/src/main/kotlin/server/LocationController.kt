@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController
 class LocationController(val locationRepository: LocationRepository) {
 
     @RequestMapping("/locations")
-    fun findAll() = locationRepository.findAll()
+    fun findByName(@RequestParam(value = "name") name: String) = locationRepository.findTop20ByNameContainsIgnoreCase(name)
 }
