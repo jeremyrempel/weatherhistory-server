@@ -1,4 +1,4 @@
-package server
+package app.weatherhistory.server
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.Entity

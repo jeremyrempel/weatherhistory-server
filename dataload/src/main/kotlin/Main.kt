@@ -4,6 +4,8 @@ import jdbc.loadMonthlyAvg
 import jdbc.resetReadings
 import load.*
 import parse.pullAndParseCity
+import java.io.InputStreamReader
+import java.net.URL
 
 
 // 1. monthly average (temp high, temp low, rainfall, wind, sun)
@@ -13,23 +15,20 @@ import parse.pullAndParseCity
 
 fun main(args: Array<String>) {
 
-//    println("Loading country data (NOAA)")
-//    val countryData = pullAndParseCountryData()
-//    loadCountries(countryData)
-//    println("${countryData.size} countries loaded")
-//
-//    println("Loading station data (NOAA)")
-//    val stationData = pullAndParseStationData()
-//    loadStations(stationData)
-//    println("${stationData.size} stations loaded")
-//
-//    println("Loading cities (GEOCODE)")
-//    val cityData = pullAndParseCity()
-//    loadCities(cityData)
+    loadCountries()
+
+    println("Loading station data (NOAA)")
+    val stationData = pullAndParseStationData()
+    loadStations(stationData)
+    println("${stationData.size} stations loaded")
+
+    println("Loading cities (GEOCODE)")
+    val cityData = pullAndParseCity()
+    loadCities(cityData)
 
     // JFK
     //val stationCode = "USW00094789"
-//    println("Loading reading data")
+    println("Loading reading data")
 
     val stationList = getStations()
     resetReadings()
@@ -55,7 +54,11 @@ fun getStations(): List<String> {
     return blah
 }
 
-fun loadCountries(data: List<Map<String, String>>) {
+fun loadCountries() {
+
+    println("Loading country data (NOAA)")
+    val data = pullAndParseCountryData()
+    println("${data.size} countries loaded")
 
     getConnection().use { conn ->
         conn.createStatement().execute("truncate table countries cascade")
@@ -85,9 +88,28 @@ fun loadStations(data: List<Map<String, String>>) {
                 ps.setDouble(6, row["elevation"]?.toDouble() ?: 0.0)
                 ps.setString(7, row["state"])
 
-                ps.executeUpdate()
+                if (hasValidReadings(row["id"] ?: "")) {
+                    ps.executeUpdate()
+                } else {
+                    println("Skipping station ${row["id"]}. No TMAX")
+                }
             }
         }
         conn.commit()
     }
+}
+
+private fun hasValidReadings(stationCode: String): Boolean {
+    // ensure there is valid TMAX,TMIN for the city
+    var isValid = false
+    val url = URL(Config.readingUrl + "/$stationCode.dly")
+    InputStreamReader(url.openStream()).use {
+        it.forEachLine {
+            if (it.contains("TMAX")) {
+                isValid = true
+                return@forEachLine
+            }
+        }
+    }
+    return isValid
 }

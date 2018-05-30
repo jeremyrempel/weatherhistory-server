@@ -1,4 +1,4 @@
-package server
+package app.weatherhistory.server
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.Repository

@@ -1,14 +1,14 @@
-# install postgis
+-- install postgis
 CREATE EXTENSION postgis;
 
-DROP TABLE IF EXISTS countries;
+DROP TABLE IF EXISTS countries CASCADE;
 
 CREATE TABLE countries (
   country_code CHAR(2) PRIMARY KEY,
   name VARCHAR(100) NOT NULL
 );
 
-DROP TABLE IF EXISTS stations;
+DROP TABLE IF EXISTS stations CASCADE ;
 
 CREATE TABLE stations (
     station_code CHAR(11) PRIMARY KEY,
@@ -19,7 +19,7 @@ CREATE TABLE stations (
     state CHAR(2)
 );
 
-DROP TABLE IF EXISTS cities;
+DROP TABLE IF EXISTS cities CASCADE;
 
 CREATE TABLE cities (
   geonameid INT PRIMARY KEY,
@@ -29,7 +29,7 @@ CREATE TABLE cities (
   station_code CHAR(11) REFERENCES stations (station_code) NOT NULL
 );
 
-DROP TABLE IF EXISTS monthlyavg;
+DROP TABLE IF EXISTS monthlyavg CASCADE;
 
 CREATE TABLE monthlyavg (
   id SERIAL PRIMARY KEY,

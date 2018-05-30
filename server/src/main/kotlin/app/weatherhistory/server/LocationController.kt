@@ -1,4 +1,4 @@
-package server
+package app.weatherhistory.server
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam

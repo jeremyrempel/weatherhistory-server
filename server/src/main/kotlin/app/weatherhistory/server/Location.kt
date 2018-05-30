@@ -1,7 +1,8 @@
-package server
+package app.weatherhistory.server
 
 import javax.persistence.*
 
+@Cacheable
 @Table(name = "locations")
 @Entity
 data class Location(
